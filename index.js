@@ -26,6 +26,9 @@ app.use("/api/auth",authRoutes)
 app.use("/api/users",userRoutes)
 
 
+app.get("/",(req,res)=>{
+    res.send("Welcome to the HRMS API")
+})
 
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}/`);

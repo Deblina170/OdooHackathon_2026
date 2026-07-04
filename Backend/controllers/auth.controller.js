@@ -1,7 +1,8 @@
-
 import User from "../modules/user.module.js";
-import bycrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 
 // Register
@@ -40,6 +41,20 @@ export const register = async (req, res) => {
       });
     }
 
+    //password validation
+
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Password must be at least 6 characters long and contain at least one letter and one number.",
+      });
+    }
+
+
+
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -70,6 +85,13 @@ export const register = async (req, res) => {
     });
   }
 };
+
+
+
+
+
+
+
 
 // Login
 export const login = async (req, res) => {
